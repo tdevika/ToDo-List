@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/deletebtn"
+        android:title="Delete"
+        app:showAsAction="always">
+
+    </item>
+    <item
+        android:icon="@drawable/task_filter_list"
+        android:title="Main Menu"
+        app:showAsAction="always">
+        <menu>
+            <group
+                android:id="@+id/sortedTask"
+                android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/all"
+                    android:title="@string/all" />
+                <item
+                    android:id="@+id/active"
+                    android:title="@string/active" />
+                <item
+                    android:id="@+id/completed"
+                    android:title="@string/completed" />
+
+            </group>
+        </menu>
+    </item>
+</menu>

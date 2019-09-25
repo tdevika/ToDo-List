@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.devika.todolist.ui.list.TasksFragment"
+        android:label="Tasks List" >
+        <action
+            android:id="@+id/tasksFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskDetailsFragment"
+        android:name="com.devika.todolist.ui.datails.TaskDetailsFragment"
+        android:label="New Task" >
+        <action
+            android:id="@+id/taskDetailsFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.devika.todolist.ui.itemdetails.ItemDetailsFragment"
+        android:label="Task Details" >
+        <action
+            android:id="@+id/action_itemDetailsFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_itemDetailsFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment"
+            app:popUpTo="@+id/tasksFragment" />
+        <argument
+            android:name="TaskDetails"
+            app:argType="com.devika.todolist.model.Tasks" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.devika.todolist.ui.edit.EditTaskFragment"
+        android:label="Edit Task" >
+        <action
+            android:id="@+id/action_editTaskFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+        <argument
+            android:name="editDetails"
+            app:argType="com.devika.todolist.model.Tasks" />
+    </fragment>
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="com.devika.todolist.ui.status.StatusFragment"
+        android:label="Status" />
+
+</navigation>

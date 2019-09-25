@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/taskList"
+        android:icon="@drawable/task_list"
+        android:title="TaskList" />
+    <item
+        android:id="@+id/taskstatus"
+        android:icon="@drawable/task_status"
+        android:title="Status" />
+</menu>

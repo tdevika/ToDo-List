@@ -2,43 +2,74 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="taskViewModel"
+            type="com.devika.todolist.ui.list.TasksViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coOrdinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollView"
+
+        <RelativeLayout
+            android:id="@+id/taskcontainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="true"
                 android:orientation="vertical"
-                >
+                android:visibility="@{taskViewModel.empty ? View.GONE : View.VISIBLE}">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
-        </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/noTasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:visibility="@{taskViewModel.empty ? View.VISIBLE : View.GONE}">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/todo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="You have no active tasks!" />
+
+            </LinearLayout>
+        </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
             android:id="@+id/taskdListFltoatbtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="50dp"
             android:padding="10dp"
             android:src="@drawable/floating_add"
             app:fabSize="normal"
-            app:layout_anchor="@id/scrollView"
+            app:layout_anchor="@id/taskcontainer"
             app:layout_anchorGravity="bottom|right|end" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

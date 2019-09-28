@@ -6,7 +6,7 @@
 
         <variable
             name="taskdetail"
-            type="com.devika.todolist.ui.itemdetails.ItemDetailsViewModel" />
+            type="com.devika.todolist.ui.taskdetails.TaskDetailsViewModel" />
 
     </data>
 

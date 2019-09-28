@@ -1,4 +1,4 @@
-package com.devika.todolist.ui.itemdetails
+package com.devika.todolist.ui.taskdetails
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ItemDetailsViewModel(tasks: Tasks, var repository: TasksRepository) : ViewModel() {
+class TaskDetailsViewModel(tasks: Tasks, var repository: TasksRepository) : ViewModel() {
     var task = MutableLiveData<Tasks>()
     var isTaskDeleted = MutableLiveData<Boolean>().apply { false }
     var coroutineExceptionHandler = CoroutineExceptionHandler { _, exception -> onError(exception) }

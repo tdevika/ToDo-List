@@ -6,7 +6,7 @@
 
         <variable
             name="detaillViewModel"
-            type="com.devika.todolist.ui.datails.TaskDetailsViewModel" />
+            type="com.devika.todolist.ui.addtask.AddTaskViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

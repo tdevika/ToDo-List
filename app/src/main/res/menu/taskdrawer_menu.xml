@@ -4,11 +4,11 @@
     >
 
     <item
-        android:id="@+id/taskList"
+        android:id="@id/tasksFragment"
         android:icon="@drawable/task_list"
         android:title="TaskList" />
     <item
-        android:id="@+id/taskstatus"
+        android:id="@id/statusFragment"
         android:icon="@drawable/task_status"
         android:title="Status" />
 </menu>

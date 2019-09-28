@@ -1,4 +1,4 @@
-package com.devika.todolist.ui.itemdetails
+package com.devika.todolist.ui.taskdetails
 
 import android.os.Bundle
 import android.view.*
@@ -11,10 +11,10 @@ import com.devika.todolist.MyApplication
 import com.devika.todolist.R
 import com.devika.todolist.databinding.ItemDetailsBinding
 
-class ItemDetailsFragment : Fragment() {
+class TaskDetailsFragment : Fragment() {
     lateinit var binding: ItemDetailsBinding
-    lateinit var itemDetailsViewModel: ItemDetailsViewModel
-    lateinit var itemDetailsViewModelFactory: ItemDetailsViewModelFactory
+    lateinit var taskDetailsViewModel: TaskDetailsViewModel
+    lateinit var taskDetailsViewModelFactory: TaskDetailsViewModelFactory
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,24 +26,24 @@ class ItemDetailsFragment : Fragment() {
             container,
             false
         )
-        var task = ItemDetailsFragmentArgs.fromBundle(arguments!!).taskDetails
-        itemDetailsViewModelFactory =
-            ItemDetailsViewModelFactory(task, MyApplication.tasksRepository)
-        itemDetailsViewModel = ViewModelProviders.of(this, itemDetailsViewModelFactory)
-            .get(ItemDetailsViewModel::class.java)
-        binding.taskdetail = itemDetailsViewModel
+        var task = TaskDetailsFragmentArgs.fromBundle(arguments!!).taskDetails
+        taskDetailsViewModelFactory =
+            TaskDetailsViewModelFactory(task, MyApplication.tasksRepository)
+        taskDetailsViewModel = ViewModelProviders.of(this, taskDetailsViewModelFactory)
+            .get(TaskDetailsViewModel::class.java)
+        binding.taskdetail = taskDetailsViewModel
         binding.lifecycleOwner = this
         binding.itemDtailsFloatBtn.setOnClickListener {
             view!!.findNavController()
                 .navigate(
-                    ItemDetailsFragmentDirections.ActionItemDetailsFragmentToEditTaskFragment(
+                    TaskDetailsFragmentDirections.ActionTaskDetailsFragmentToEditTaskFragment(
                         task
                     )
                 )
         }
         binding.checkBox.setOnCheckedChangeListener { button, isChecked ->
             if (isChecked) {
-                itemDetailsViewModel.updateIsCompleted()
+                taskDetailsViewModel.updateIsCompleted()
 
             }
         }
@@ -54,22 +54,21 @@ class ItemDetailsFragment : Fragment() {
     }
 
     private fun isItemDeleted() {
-        itemDetailsViewModel.isTaskDeleted.observe(this, Observer {
+        taskDetailsViewModel.isTaskDeleted.observe(this, Observer {
             if (it == true) {
-                view!!.findNavController()
-                    .navigate(ItemDetailsFragmentDirections.actionItemDetailsFragmentToTasksFragment())
+                view!!.findNavController().navigate(TaskDetailsFragmentDirections.actionTaskDetailsFragmentToTasksFragment())
             }
         })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.delete_menu, menu)
+        inflater.inflate(R.menu.delete, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
-            itemDetailsViewModel.deleteSelectedItem(itemDetailsViewModel.task.value!!)
+            taskDetailsViewModel.deleteSelectedItem(taskDetailsViewModel.task.value!!)
         }
         return false
     }

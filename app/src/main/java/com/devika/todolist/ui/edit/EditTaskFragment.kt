@@ -30,7 +30,7 @@ class EditTaskFragment : Fragment() {
         binding.editTask=editTaskViewModel
         editTaskViewModel.isTaskEdited.observe(this, Observer {
             if(it==true){
-                findNavController().navigate(EditTaskFragmentDirections.actionEditTaskFragmentToItemDetailsFragment(editTaskViewModel.taskEditedDetails.value!!))
+                findNavController().navigate(EditTaskFragmentDirections.actionEditTaskFragmentToTaskDetailsFragment(editTaskViewModel.taskEditedDetails.value!!))
             }
         })
 

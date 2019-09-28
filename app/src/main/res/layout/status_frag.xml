@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="status"
+            type="com.devika.todolist.ui.status.StatusViewModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="6dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:orientation="vertical"
+        >
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status_no_tasks"
+            android:textSize="25dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="@{status.empty ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:id="@+id/stats_active_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="1dp"
+            android:textSize="23dp"
+            android:text="@{@string/status_active_tasks(status.activeTasksPercent)}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="@{status.empty ? View.GONE : View.VISIBLE}" />
+
+
+        <TextView
+            android:id="@+id/stats_completed_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="1dp"
+            android:textSize="23dp"
+            android:text="@{@string/status_completed_tasks(status.completedTasksPercent)}"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="@{status.empty ? View.GONE : View.VISIBLE}" />
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

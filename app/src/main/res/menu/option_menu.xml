@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/delete"
-        android:icon="@drawable/deletebtn"
-        android:title="Delete"
-        app:showAsAction="always">
 
-    </item>
     <item
         android:icon="@drawable/task_filter_list"
         android:title="Main Menu"
@@ -29,5 +23,11 @@
 
             </group>
         </menu>
+    </item>
+    <item
+        android:id="@+id/delete_completed_task"
+        android:title="Delete Completed Tasks"
+        app:showAsAction="never">
+
     </item>
 </menu>

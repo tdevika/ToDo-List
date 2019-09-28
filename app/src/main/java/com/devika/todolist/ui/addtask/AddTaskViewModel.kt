@@ -1,6 +1,5 @@
-package com.devika.todolist.ui.datails
+package com.devika.todolist.ui.addtask
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TaskDetailsViewModel(var taskRepository: TasksRepository) : ViewModel() {
+class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
 
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()

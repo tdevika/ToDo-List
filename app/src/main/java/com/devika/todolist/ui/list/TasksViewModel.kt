@@ -1,8 +1,6 @@
 package com.devika.todolist.ui.list
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.devika.todolist.model.Tasks
 import com.devika.todolist.repository.TasksRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +11,11 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
 
     var taskList = MutableLiveData<List<Tasks>>()
     var taskDeails = MutableLiveData<Tasks>()
+  // private val _empty=MutableLiveData<Boolean>()
+    val empty: LiveData<Boolean> = Transformations.map(taskList){
+      it.isEmpty()
+  }
+        //get() = _empty
 
     init {
         gettaskList()
@@ -27,6 +30,7 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
             withContext(Dispatchers.Main) {
                 taskList.postValue(tasksList)
             }
+
         }
     }
 

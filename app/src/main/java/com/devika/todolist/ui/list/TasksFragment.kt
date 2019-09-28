@@ -30,7 +30,7 @@ class TasksFragment : Fragment() {
         setHasOptionsMenu(true)
         binding.taskdListFltoatbtn.setOnClickListener {
             view!!.findNavController()
-                .navigate(TasksFragmentDirections.tasksFragmentToTaskDetailsFragment())
+                .navigate(TasksFragmentDirections.tasksFragmentToAddTaskFragment())
         }
         tasksViewModel.taskList.observe(this, Observer {
             it?.let {
@@ -39,8 +39,7 @@ class TasksFragment : Fragment() {
         })
         tasksViewModel.taskDeails.observe(this, Observer {
             it?.let {
-                view!!.findNavController()
-                    .navigate(TasksFragmentDirections.actionTasksFragmentToItemDetailsFragment(it))
+                view!!.findNavController().navigate(TasksFragmentDirections.actionTasksFragmentToTaskDetailsFragment(it))
 
             }
         })
@@ -71,7 +70,10 @@ class TasksFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.groupId == R.id.sortedTask) {
+        if (item.itemId == R.id.delete_completed_task) {
+            tasksViewModel.deleteSelectedTasks(tasksViewModel.taskList.value!!)
+        }
+        else  if (item.groupId == R.id.sortedTask) {
             if (!item.isChecked) {
                 item.isChecked = true
                 when (item.itemId) {
@@ -80,8 +82,6 @@ class TasksFragment : Fragment() {
                     else -> tasksViewModel.gettaskList()
                 }
             }
-        } else if (item.itemId == R.id.delete) {
-            tasksViewModel.deleteSelectedTasks(tasksViewModel.taskList.value!!)
         }
       return false
     }

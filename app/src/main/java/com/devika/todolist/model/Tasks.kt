@@ -20,4 +20,10 @@ data class Tasks(
     @ColumnInfo(name = "completed")
     var isCompleted:Boolean=false
 
-) : Parcelable
+) : Parcelable{
+    val isEmpty
+    get()=title.isEmpty()||description.isEmpty()
+
+    val isActive
+    get() = !isCompleted
+}

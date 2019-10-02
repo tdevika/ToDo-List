@@ -48,6 +48,31 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textSize="23dp"
                     android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/alarm_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:inputType="datetime"
+                    android:hint="Set Alarm"
+                    android:text="@={editTask.taskEditedDetails.alarm}" />
+
+                <Button
+                    android:id="@+id/alarm_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/time_picker" />
+            </RelativeLayout>
 
                 <EditText
                     android:id="@+id/desciption"

@@ -1,8 +1,10 @@
 package com.devika.todolist.ui.list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.devika.todolist.R
 import com.devika.todolist.databinding.TasksListBinding
 import com.devika.todolist.model.Tasks
 import com.devika.todolist.repository.TasksRepository
@@ -19,8 +21,8 @@ class TasksAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        var container = LayoutInflater.from(parent.context)
-        return TaskViewHolder(TasksListBinding.inflate(container,parent,false))
+        val container = LayoutInflater.from(parent.context)
+        return TaskViewHolder(TasksListBinding.inflate(container, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -28,18 +30,25 @@ class TasksAdapter(
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        var task = tasks[position]
+        val task = tasks[position]
         holder.setTasks(task)
     }
 
-    inner class TaskViewHolder(var binding: TasksListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(var binding: TasksListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun setTasks(task: Tasks) {
+
             binding.tasksViewModel = task
+            if (task.alarm.isNullOrEmpty()) {
+                binding.alarmImg.visibility = View.GONE
+            } else {
+                binding.alarmImg.visibility = View.VISIBLE
+                binding.alarmImg.setImageResource(R.drawable.time_picker)
+            }
             binding.checkBox.setOnCheckedChangeListener { button, isChecked ->
                 if (isChecked) {
                     task.isCompleted = true
                     tasksRepository.updateTasks(task)
-
                 } else {
                     task.isCompleted = false
                 }
@@ -48,6 +57,5 @@ class TasksAdapter(
                 tasksViewModel.onclick(task)
             }
         }
-
     }
 }

@@ -21,6 +21,8 @@
             android:id="@+id/taskcontainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#F5F2F2"
+
             android:clickable="true"
             android:orientation="vertical">
 

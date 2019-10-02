@@ -39,11 +39,39 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/alarm_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:inputType="datetime"
+                        android:hint="Set Alarm"
+                        android:text="@={detaillViewModel.alarm}" />
+
+                    <Button
+                        android:id="@+id/alarm_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/time_picker" />
+                </RelativeLayout>
+
                 <EditText
                     android:id="@+id/desciption"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:background="@null"
                     android:gravity="top"
@@ -65,7 +93,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="40dp"
-            android:onClick="@{(v)->detaillViewModel.setTaskToDatabase()}"
             android:padding="10dp"
             android:src="@drawable/save_floatongbtn"
             app:fabSize="normal"

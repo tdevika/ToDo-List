@@ -28,7 +28,7 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
                 tasksList = repository.getTasks()
             }
             withContext(Dispatchers.Main) {
-                taskList.postValue(tasksList)
+                taskList.postValue(tasksList.asReversed())
             }
 
         }

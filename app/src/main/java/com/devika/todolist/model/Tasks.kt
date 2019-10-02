@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Entity(tableName = "tasks")
@@ -18,12 +19,17 @@ data class Tasks(
     @ColumnInfo(name = "description")
     var description:String="",
     @ColumnInfo(name = "completed")
-    var isCompleted:Boolean=false
+    var isCompleted:Boolean=false,
+    @ColumnInfo(name="alarm")
+    var alarm :String?
 
-) : Parcelable{
+
+) : Parcelable
+{
     val isEmpty
     get()=title.isEmpty()||description.isEmpty()
 
     val isActive
     get() = !isCompleted
+
 }

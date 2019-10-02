@@ -23,14 +23,20 @@ class EditTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.edit_task, container, false)
-        var editDetails=EditTaskFragmentArgs.fromBundle(arguments!!).editDetails
-        editTaskViewModelFactory=EditTaskViewModelFactory(editDetails,MyApplication.tasksRepository)
-        editTaskViewModel=ViewModelProviders.of(this,editTaskViewModelFactory).get(EditTaskViewModel::class.java)
-       binding.lifecycleOwner=this
-        binding.editTask=editTaskViewModel
+        var editDetails = EditTaskFragmentArgs.fromBundle(arguments!!).editDetails
+        editTaskViewModelFactory =
+            EditTaskViewModelFactory(editDetails, MyApplication.tasksRepository)
+        editTaskViewModel =
+            ViewModelProviders.of(this, editTaskViewModelFactory).get(EditTaskViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.editTask = editTaskViewModel
         editTaskViewModel.isTaskEdited.observe(this, Observer {
-            if(it==true){
-                findNavController().navigate(EditTaskFragmentDirections.actionEditTaskFragmentToTaskDetailsFragment(editTaskViewModel.taskEditedDetails.value!!))
+            if (it == true) {
+                findNavController().navigate(
+                    EditTaskFragmentDirections.actionEditTaskFragmentToTaskDetailsFragment(
+                        editTaskViewModel.taskEditedDetails.value!!
+                    )
+                )
             }
         })
 

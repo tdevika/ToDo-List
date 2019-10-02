@@ -70,6 +70,11 @@ class TaskDetailsFragment : Fragment() {
         if (item.itemId == R.id.delete) {
             taskDetailsViewModel.deleteSelectedItem(taskDetailsViewModel.task.value!!)
         }
+        else if (item.itemId == android.R.id.home) {
+            view!!.findNavController()
+                .navigate(TaskDetailsFragmentDirections.actionTaskDetailsFragmentToTasksFragment())
+            return true
+        }
         return false
     }
 

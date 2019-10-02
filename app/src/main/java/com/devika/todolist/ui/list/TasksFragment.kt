@@ -26,7 +26,7 @@ class TasksFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.tasks_frag, container, false)
         setUPViewModel()
-        initialixeUI()
+        initUI()
         setHasOptionsMenu(true)
         binding.taskdListFltoatbtn.setOnClickListener {
             view!!.findNavController()
@@ -49,7 +49,7 @@ class TasksFragment : Fragment() {
     }
 
 
-    private fun initialixeUI() {
+    private fun initUI() {
         tasksAdapter = TasksAdapter(emptyList(), MyApplication.tasksRepository, tasksViewModel)
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(activity)
@@ -58,7 +58,6 @@ class TasksFragment : Fragment() {
     }
 
     private fun setUPViewModel() {
-
         tasksViewModelFactory = TasksViewModelFactory(MyApplication.tasksRepository)
         tasksViewModel =
             ViewModelProviders.of(this, tasksViewModelFactory).get(TasksViewModel::class.java)
@@ -85,4 +84,5 @@ class TasksFragment : Fragment() {
         }
       return false
     }
+
 }

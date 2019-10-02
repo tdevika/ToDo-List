@@ -14,6 +14,7 @@ class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
 
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
+    var alarm = MutableLiveData<String>()
     var isTaskAdded = MutableLiveData<Boolean>().apply { false }
 
 
@@ -30,7 +31,8 @@ class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
                 taskRepository.setTasks(
                     Tasks(
                         title = title.value!!,
-                        description = description.value!!
+                        description = description.value!!,
+                        alarm = alarm.value
                     )
                 )
             }

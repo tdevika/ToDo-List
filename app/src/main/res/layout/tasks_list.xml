@@ -22,6 +22,10 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:contentPadding="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,12 +42,21 @@
               />
 
             <TextView
-                android:id="@+id/title"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{tasksViewModel.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            />
+        </LinearLayout>
+            <TextView
+                android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{tasksViewModel.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-           />
+                android:layout_marginLeft="30dp"
+                android:textSize="16dp"
+                android:text="@{tasksViewModel.date}"
+                />
 
 
         </LinearLayout>

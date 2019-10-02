@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="detaillViewModel"
+            name="addTaskViewModel"
             type="com.devika.todolist.ui.addtask.AddTaskViewModel" />
     </data>
 
@@ -34,10 +34,33 @@
                     android:hint="Title"
                     android:imeOptions="flagNoExtractUi"
                     android:maxLines="1"
-                    android:text="@={detaillViewModel.title}"
+                    android:text="@={addTaskViewModel.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textSize="20dp"
                     android:textStyle="bold" />
+                <FrameLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date"
+                    android:textSize="20sp"
+                    android:text="@={addTaskViewModel.date}"
+                    android:id="@+id/datePic_editText"
+                    android:inputType="date"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp"/>
+                <Button android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:id="@+id/datePicBtn"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/ic_date_range"
+                    />
+                </FrameLayout>
 
                 <EditText
                     android:id="@+id/desciption"
@@ -49,7 +72,7 @@
                     android:gravity="top"
                     android:hint="Enter your task here"
                     android:imeOptions="flagNoExtractUi"
-                    android:text="@={detaillViewModel.description}"
+                    android:text="@={addTaskViewModel.description}"
                     android:textSize="20dp"
                     android:textStyle="italic"
 
@@ -65,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="40dp"
-            android:onClick="@{(v)->detaillViewModel.setTaskToDatabase()}"
+            android:onClick="@{(v)->addTaskViewModel.setTaskToDatabase()}"
             android:padding="10dp"
             android:src="@drawable/save_floatongbtn"
             app:fabSize="normal"

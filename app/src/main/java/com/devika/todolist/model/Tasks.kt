@@ -12,18 +12,21 @@ import java.util.*
 data class Tasks(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id:String= UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "title")
-    var title:String=" ",
+    var title: String = " ",
     @ColumnInfo(name = "description")
-    var description:String="",
+    var description: String = "",
     @ColumnInfo(name = "completed")
-    var isCompleted:Boolean=false
+    var isCompleted: Boolean = false,
+    @ColumnInfo(name = "date")
+    var date: String
 
-) : Parcelable{
+
+) : Parcelable {
     val isEmpty
-    get()=title.isEmpty()||description.isEmpty()
+        get() = title.isEmpty() || description.isEmpty()
 
     val isActive
-    get() = !isCompleted
+        get() = !isCompleted
 }

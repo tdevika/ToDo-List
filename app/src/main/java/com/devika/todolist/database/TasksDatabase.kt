@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devika.todolist.model.Tasks
 
-@Database(entities = [Tasks::class], version = 1, exportSchema = false)
+@Database(entities = [Tasks::class], version = 4, exportSchema = false)
 abstract class TasksDatabase : RoomDatabase() {
     abstract fun tasksDao(): TasksDao
 

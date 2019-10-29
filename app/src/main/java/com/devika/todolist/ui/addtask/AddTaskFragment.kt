@@ -7,7 +7,6 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,21 +18,17 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.devika.todolist.MyApplication
 import com.devika.todolist.R
-import com.devika.todolist.databinding.TasksDetailsBinding
+import com.devika.todolist.databinding.AddTaskBinding
 import com.devika.todolist.ui.addtask.NotificationReceiver.Companion.TASK
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class AddTaskFragment : Fragment() {
 
-    lateinit var alarmDate: Date
-    lateinit var binding: TasksDetailsBinding
-    lateinit var addTaskViewModel: AddTaskViewModel
-    lateinit var addTaskViewModelFactory: AddTaskViewModelFactory
-    lateinit var alarmManager: AlarmManager
-    lateinit var pendingIntent: PendingIntent
-    var timeSetListener: TimePickerDialog.OnTimeSetListener? = null
-    var dateSetListener: DatePickerDialog.OnDateSetListener? = null
+    private lateinit var alarmDate: Date
+    lateinit var binding: AddTaskBinding
+    lateinit var viewModel: AddTaskViewModel
     private val calendar = Calendar.getInstance()
 
     override fun onCreateView(
@@ -41,41 +36,23 @@ class AddTaskFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.tasks_details, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.add_task, container, false)
         setupViewModel()
-        binding.alarmBtn.setOnClickListener {
-            showDatePicker()
-        }
-        binding.taskDtailsFloatBtn.setOnClickListener {
-            if (::alarmDate.isInitialized) {
-                val intent = Intent(context, NotificationReceiver::class.java)
-                intent.putExtra(TASK, addTaskViewModel.title.value)
-                pendingIntent =
-                    PendingIntent.getBroadcast(
-                        context,
-                        1,
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                    )
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
-                )
-            }
-            addTaskViewModel.setTaskToDatabase()
-        }
-        setNotification()
+        setClickListener()
         return binding.root
     }
 
+    private fun setClickListener() {
+        binding.alarmEt.setOnClickListener { showDatePicker() }
+        binding.taskDtailsFloatBtn.setOnClickListener { addTask() }
+    }
+
+
     private fun setupViewModel() {
-        addTaskViewModelFactory = AddTaskViewModelFactory(MyApplication.tasksRepository)
-        addTaskViewModel = ViewModelProviders.of(this, addTaskViewModelFactory)
-            .get(AddTaskViewModel::class.java)
-        binding.detaillViewModel = addTaskViewModel
-        binding.lifecycleOwner = this
-        addTaskViewModel.isTaskAdded.observe(this, Observer {
+        viewModel =
+            ViewModelProviders.of(this, AddTaskViewModelFactory(MyApplication.tasksRepository))
+                .get(AddTaskViewModel::class.java)
+        viewModel.isTaskAdded.observe(this, Observer {
             if (it == true) {
                 findNavController().navigate(AddTaskFragmentDirections.addTaskFragmentToTasksFragment())
                 Toast.makeText(context, "Tasks is Added", Toast.LENGTH_LONG).show()
@@ -83,29 +60,17 @@ class AddTaskFragment : Fragment() {
         })
     }
 
-    private fun setNotification() {
-        val formatter = SimpleDateFormat("dd/MM/yyyy   HH:mm")
-        alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        dateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+    private fun showDatePicker() {
+        val dateListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
             calendar.set(Calendar.DAY_OF_MONTH, day)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.YEAR, year)
             showTimePicker()
         }
-        timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-            calendar.set(Calendar.HOUR_OF_DAY, hour)
-            calendar.set(Calendar.MINUTE, minute)
-            alarmDate=calendar.time
-            binding.alarmEt.setText(formatter.format(alarmDate))
-        }
-    }
-
-    private fun showDatePicker() {
         context?.let {
             DatePickerDialog(
                 it,
-                dateSetListener,
+                dateListener,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
@@ -113,13 +78,51 @@ class AddTaskFragment : Fragment() {
         }
     }
 
-    fun showTimePicker() {
+    private fun addTask() {
+        if (binding.taskTitle.text.isBlank()) {
+            Toast.makeText(context, "Please Enter Title", Toast.LENGTH_SHORT).show()
+        } else {
+            if (::alarmDate.isInitialized) {
+                setAlarm()
+            }
+            viewModel.setTaskToDatabase(
+                binding.taskTitle.text.toString(),
+                binding.desciption.text.toString(),
+                binding.alarmEt.text.toString()
+            )
+        }
+    }
+
+    private fun showTimePicker() {
+        val timeListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            calendar.set(Calendar.MINUTE, minute)
+            alarmDate = calendar.time
+            binding.alarmEt.setText(SimpleDateFormat("dd/MM/yyyy   HH:mm").format(alarmDate))
+        }
         TimePickerDialog(
             context,
-            timeSetListener,
+            timeListener,
             calendar.get(Calendar.HOUR_OF_DAY),
             calendar.get(Calendar.MINUTE),
             true
         ).show()
+    }
+
+    private fun setAlarm() {
+        val intent = Intent(context, NotificationReceiver::class.java)
+        intent.putExtra(TASK, binding.taskTitle.text.toString())
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            1,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
     }
 }

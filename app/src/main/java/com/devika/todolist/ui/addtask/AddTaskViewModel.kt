@@ -12,10 +12,7 @@ import kotlinx.coroutines.withContext
 
 class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
 
-    var title = MutableLiveData<String>()
-    var description = MutableLiveData<String>()
-    var alarm = MutableLiveData<String>()
-    var isTaskAdded = MutableLiveData<Boolean>().apply { false }
+    var isTaskAdded = MutableLiveData<Boolean>(false)
 
 
     private val coroutineExceptionHandler =
@@ -25,14 +22,18 @@ class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
         isTaskAdded.postValue(false)
     }
 
-    fun setTaskToDatabase() {
+    fun setTaskToDatabase(
+        title: String,
+        description: String,
+        alarm: String
+    ) {
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
                 taskRepository.setTasks(
                     Tasks(
-                        title = title.value!!,
-                        description = description.value!!,
-                        alarm = alarm.value
+                        title = title,
+                        description = description,
+                        alarm = alarm
                     )
                 )
             }

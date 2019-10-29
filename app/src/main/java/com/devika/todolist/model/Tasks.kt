@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Entity(tableName = "tasks")
@@ -13,23 +12,19 @@ import java.util.*
 data class Tasks(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id:String= UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "title")
-    var title:String=" ",
+    var title: String = " ",
     @ColumnInfo(name = "description")
-    var description:String="",
+    var description: String = "",
     @ColumnInfo(name = "completed")
-    var isCompleted:Boolean=false,
-    @ColumnInfo(name="alarm")
-    var alarm :String?
+    var isCompleted: Boolean = false,
+    @ColumnInfo(name = "alarm")
+    var alarm: String?
 
 
-) : Parcelable
-{
-    val isEmpty
-    get()=title.isEmpty()||description.isEmpty()
-
+) : Parcelable {
     val isActive
-    get() = !isCompleted
+        get() = !isCompleted
 
 }

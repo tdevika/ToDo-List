@@ -11,26 +11,22 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
 
     var taskList = MutableLiveData<List<Tasks>>()
     var taskDeails = MutableLiveData<Tasks>()
-  // private val _empty=MutableLiveData<Boolean>()
-    val empty: LiveData<Boolean> = Transformations.map(taskList){
-      it.isEmpty()
-  }
-        //get() = _empty
-
-    init {
-        gettaskList()
+    val empty: LiveData<Boolean> = Transformations.map(taskList) {
+        it.isEmpty()
     }
 
-    fun gettaskList() {
-        lateinit var tasksList: List<Tasks>
+    init {
+        getTaskList()
+    }
+
+    fun getTaskList() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                tasksList = repository.getTasks()
+            val tasksList = withContext(Dispatchers.IO) {
+                repository.getTasks().asReversed()
             }
             withContext(Dispatchers.Main) {
-                taskList.postValue(tasksList.asReversed())
+                taskList.postValue(tasksList)
             }
-
         }
     }
 
@@ -39,10 +35,9 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
     }
 
     fun getTasks(task: Boolean) {
-        lateinit var tasksList: List<Tasks>
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                tasksList = repository.getTasks(task)
+            val tasksList = withContext(Dispatchers.IO) {
+                repository.getTasks(task)
             }
             withContext(Dispatchers.Main) {
                 taskList.postValue(tasksList)
@@ -50,12 +45,12 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
         }
     }
 
-    fun deleteSelectedTasks(task: List<Tasks>){
+    fun deleteSelectedTasks(task: List<Tasks>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 repository.deleteTasks(task)
             }
-            gettaskList()
+            getTaskList()
         }
     }
 

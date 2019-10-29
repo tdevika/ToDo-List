@@ -38,14 +38,8 @@ class TasksAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun setTasks(task: Tasks) {
 
-            binding.tasksViewModel = task
-            if (task.alarm.isNullOrEmpty()) {
-                binding.alarmImg.visibility = View.GONE
-            } else {
-                binding.alarmImg.visibility = View.VISIBLE
-                binding.alarmImg.setImageResource(R.drawable.time_picker)
-            }
-            binding.checkBox.setOnCheckedChangeListener { button, isChecked ->
+            binding.viewModel = task
+            binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     task.isCompleted = true
                     tasksRepository.updateTasks(task)

@@ -14,7 +14,6 @@ class AddTaskViewModel(var taskRepository: TasksRepository) : ViewModel() {
 
     var isTaskAdded = MutableLiveData<Boolean>(false)
 
-
     private val coroutineExceptionHandler =
         CoroutineExceptionHandler { _, exception -> onError(exception) }
 

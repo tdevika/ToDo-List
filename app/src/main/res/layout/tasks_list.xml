@@ -4,8 +4,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
         <variable
-            name="tasksViewModel"
+            name="viewModel"
             type="com.devika.todolist.model.Tasks" />
     </data>
 
@@ -22,56 +26,59 @@
         app:cardUseCompatPadding="true"
         app:contentPadding="6dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_alignParentStart="true"
+                android:button="@drawable/selecter"
+                android:checked="@{viewModel.completed}"
+                />
+
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_toStartOf="@+id/alarm_img"
+                android:layout_toEndOf="@+id/checkBox"
+                android:text="@{viewModel.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="37dp"
-                    android:layout_height="37dp"
-                    android:button="@drawable/selecter"
-                    android:checked="@{tasksViewModel.completed}"
-
-                    />
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{tasksViewModel.title}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_below="@+id/title"
+                android:layout_toStartOf="@+id/alarm_img"
+                android:layout_toEndOf="@+id/checkBox"
+                android:text="@{viewModel.description}"
+                android:visibility="@{TextUtils.isEmpty(viewModel.description) ? View.GONE : View.VISIBLE}" />
 
-                <TextView
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/checkBox"
-                    android:layout_marginLeft="16dp"
-                    android:text="@{tasksViewModel.alarm}" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/description"
+                android:layout_toStartOf="@+id/alarm_img"
+                android:layout_toEndOf="@+id/checkBox"
+                android:text="@{viewModel.alarm}"
+                android:visibility="@{TextUtils.isEmpty(viewModel.alarm) ? View.GONE : View.VISIBLE}" />
 
-                <ImageView
-                    android:id="@+id/alarm_img"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginLeft="10dp"
-                    android:padding="2dp" />
-            </LinearLayout>
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/alarm_img"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/time_picker"
+                android:visibility="@{TextUtils.isEmpty(viewModel.alarm) ? View.GONE : View.VISIBLE}" />
 
-
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </layout>

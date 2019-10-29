@@ -34,10 +34,10 @@ class TasksViewModel(var repository: TasksRepository) : ViewModel() {
         taskDeails.value = task
     }
 
-    fun getTasks(task: Boolean) {
+    fun getTasks(isCompleted: Boolean) {
         viewModelScope.launch {
             val tasksList = withContext(Dispatchers.IO) {
-                repository.getTasks(task)
+                repository.getTasks(isCompleted).asReversed()
             }
             withContext(Dispatchers.Main) {
                 taskList.postValue(tasksList)

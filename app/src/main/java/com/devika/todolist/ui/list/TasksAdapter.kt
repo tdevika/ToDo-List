@@ -47,7 +47,7 @@ class TasksAdapter(
                     task.isCompleted = false
                 }
             }
-            binding.title.setOnClickListener {
+            binding.root.setOnClickListener {
                 tasksViewModel.onclick(task)
             }
         }

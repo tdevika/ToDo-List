@@ -12,8 +12,8 @@
             android:id="@+id/tasksFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
         <action
-            android:id="@+id/action_tasksFragment_to_taskDetailsFragment"
-            app:destination="@id/taskDetailsFragment" />
+            android:id="@+id/tasksFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
     </fragment>
 
     <fragment
@@ -26,29 +26,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/taskDetailsFragment"
-        android:name="com.devika.todolist.ui.taskdetails.TaskDetailsFragment"
-        android:label="Task Details">
-        <action
-            android:id="@+id/action_taskDetailsFragment_to_editTaskFragment"
-            app:destination="@id/editTaskFragment" />
-        <action
-            android:id="@+id/action_taskDetailsFragment_to_tasksFragment"
-            app:destination="@id/tasksFragment" />
-        <argument
-            android:name="taskDetails"
-            app:argType="com.devika.todolist.model.Tasks" />
-    </fragment>
-
-    <fragment
         android:id="@+id/editTaskFragment"
         android:name="com.devika.todolist.ui.edit.EditTaskFragment"
         android:label="Edit Task">
         <action
-            android:id="@+id/action_editTaskFragment_to_taskDetailsFragment"
-            app:destination="@id/taskDetailsFragment" />
+            android:id="@+id/action_editTaskFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment"/>
         <argument
-            android:name="editDetails"
+            android:name="task"
             app:argType="com.devika.todolist.model.Tasks" />
     </fragment>
 

@@ -6,10 +6,10 @@ import com.devika.todolist.model.Tasks
 import com.devika.todolist.repository.TasksRepository
 import java.lang.IllegalArgumentException
 
-class EditTaskViewModelFactory(var editDetails:Tasks,var repository: TasksRepository) : ViewModelProvider.Factory {
+class EditTaskViewModelFactory(var task:Tasks, var repository: TasksRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditTaskViewModel::class.java)) {
-            return EditTaskViewModel(editDetails,repository) as T
+            return EditTaskViewModel(task,repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

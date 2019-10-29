@@ -51,7 +51,7 @@ class TasksFragment : Fragment() {
         })
         tasksViewModel.taskDeails.observe(this, Observer {
             findNavController()
-                .navigate(TasksFragmentDirections.actionTasksFragmentToTaskDetailsFragment(it))
+                .navigate(TasksFragmentDirections.tasksFragmentToEditTaskFragment(it))
         })
     }
 

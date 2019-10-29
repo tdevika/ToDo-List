@@ -10,16 +10,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class EditTaskViewModel(editDetails: Tasks, var repository: TasksRepository) : ViewModel() {
+class EditTaskViewModel(val task: Tasks, var repository: TasksRepository) : ViewModel() {
     var taskEditedDetails = MutableLiveData<Tasks>()
-    var isTaskEdited=MutableLiveData<Boolean>().apply { false }
+    var isTaskEdited=MutableLiveData<Boolean>(false)
+    var isTaskDeleted = MutableLiveData<Boolean>(false)
     private val coroutineExceptionHandler= CoroutineExceptionHandler{_, exception -> onError(exception)}
 
             fun onError(exception:Throwable){
                 isTaskEdited.postValue(false)
             }
     init {
-        taskEditedDetails.postValue(editDetails)
+        taskEditedDetails.postValue(task)
     }
 
     fun updateTaskToDataBase() {
@@ -31,6 +32,13 @@ class EditTaskViewModel(editDetails: Tasks, var repository: TasksRepository) : V
 
         }
     }
-
+    fun deleteSelectedItem() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.deleteTask(task)
+            }
+            isTaskDeleted.postValue(true)
+        }
+    }
 
 }

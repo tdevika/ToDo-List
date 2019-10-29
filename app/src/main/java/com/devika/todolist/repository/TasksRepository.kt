@@ -37,9 +37,7 @@ class TasksRepository(context: Context) {
         }
 
    suspend fun deleteTask(task: Tasks) {
-       if (task.isCompleted) {
        taskDao.deleteTasks(task)
-       }
     }
 
 
